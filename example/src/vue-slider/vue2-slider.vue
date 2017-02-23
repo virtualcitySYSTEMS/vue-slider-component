@@ -111,6 +111,10 @@ export default {
 			type: Boolean,
 			default: false
 		},
+		clickable: {
+			type: Boolean,
+			default: true
+		},
 		speed: {
 			type: Number,
 			default: 0.5
@@ -305,7 +309,7 @@ export default {
 			return this.direction === 'vertical' ? (this.reverse ? (e.pageY - this.offset) : (this.size - (e.pageY - this.offset))) : (this.reverse ? (this.size - (e.clientX - this.offset)) : (e.clientX - this.offset))
 		},
 		wrapClick(e) {
-			if (this.isDisabled) return false
+			if (this.isDisabled || !this.clickable) return false
 			let pos = this.getPos(e)
 			if (this.isRange) {
 				this.currentSlider = pos > ((this.position[1] - this.position[0]) / 2 + this.position[0]) ? 1 : 0
@@ -332,14 +336,14 @@ export default {
 				this.$emit('drag-end', this)
 				if (this.lazy && this.isDiff(this.val, this.value)) {
 					this.$emit('callback', this.val)
-					this.$emit('input', this.val)
+					this.$emit('input', this.isRange ? this.val.slice() : this.val)
 				}
 			}
 			else {
 				return false
 			}
 			this.flag = false
-			this.setPosition(this.speed)
+			this.setPosition()
 		},
 		setValueOnPos(pos, bool) {
 			let range = this.isRange ? this.limit[this.currentSlider] : this.limit
@@ -376,7 +380,7 @@ export default {
 					this.currentValue.splice(this.currentSlider, 1, val)
 					if (!this.lazy || !this.flag) {
 						this.$emit('callback', this.val)
-						this.$emit('input', this.val)
+						this.$emit('input', this.isRange ? this.val.slice() : this.val)
 					}
 				}
 			}
@@ -384,7 +388,7 @@ export default {
 				this.currentValue = val
 				if (!this.lazy || !this.flag) {
 					this.$emit('callback', this.val)
-					this.$emit('input', this.val)
+					this.$emit('input', this.isRange ? this.val.slice() : this.val)
 				}
 			}
 			bool || this.setPosition()
@@ -408,16 +412,18 @@ export default {
 				this.setCurrentValue(val)
 			}
 		},
-		setValue(val) {
+		setValue(val, speed) {
 			if (this.isDiff(this.val, val)) {
 				this.val = val
 				this.$emit('callback', this.val)
-				this.$emit('input', this.val)
+				this.$emit('input', this.isRange ? this.val.slice() : this.val)
 			}
-			this.setPosition()
+			this.$nextTick(() => {
+				this.setPosition()
+			})
 		},
-		setPosition() {
-			this.flag || this.setTransitionTime(this.speed)
+		setPosition(speed) {
+			this.flag || this.setTransitionTime(speed === undefined ? this.speed : speed)
 			if (this.isRange) {
 				this.currentSlider = 0
 				this.setTransform(this.position[this.currentSlider])
@@ -453,9 +459,11 @@ export default {
 				this.slider.style.msTransform = translateValue
 				if (this.direction === 'vertical') {
 					this.$refs.process.style.height = `${val}px`
+					this.$refs.process.style[this.reverse ? 'top' : 'bottom'] = 0
 				}
 				else {
 					this.$refs.process.style.width = `${val}px`
+					this.$refs.process.style[this.reverse ? 'right' : 'left'] = 0
 				}
 			}
 		},
@@ -496,7 +504,7 @@ export default {
 		refresh() {
 			if (this.$refs.elem) {
 				this.getStaticData()
-				this.setPosition(0)
+				this.setPosition()
 			}
 		}
 	},
@@ -506,7 +514,7 @@ export default {
 	mounted() {
 		this.$nextTick(() => {
 			this.getStaticData()
-			this.setValue(this.value)
+			this.setValue(this.value, 0)
 			this.bindEvents()
 		})
 	},
