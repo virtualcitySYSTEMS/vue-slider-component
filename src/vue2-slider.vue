@@ -1,45 +1,45 @@
 <template>
 	<div ref="wrap" :class="['vue-slider-wrap', flowDirection, disabledClass, { 'vue-slider-has-label': piecewiseLabel }]" v-show="show" :style="wrapStyles" @click="wrapClick">
-		<div ref="elem" class="vue-slider" :style="[elemStyles, bgStyle]">
+		<div ref="elem" class="vue-slider" :class="bgClass" :style="[elemStyles, bgStyle]">
 			<template v-if="isMoblie">
 				<template v-if="isRange">
-					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles[0], dotStyles]" @touchstart="moveStart(0)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip']" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
+					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[0], dotStyles]" @touchstart="moveStart(0)">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
 					</div>
-					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles[1], dotStyles]" @touchstart="moveStart(1)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip']" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
+					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[1], dotStyles]" @touchstart="moveStart(1)">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
 					</div>
 				</template>
 				<template v-else>
-					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles, dotStyles]" @touchstart="moveStart">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip']" :style="tooltipStyles">{{ formatter ? formatting(val) : val}}</span>
+					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles, dotStyles]" @touchstart="moveStart">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles">{{ formatter ? formatting(val) : val}}</span>
 					</div>
 				</template>
 			</template>
 			<template v-else>
 				<template v-if="isRange">
-					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles[0], dotStyles]" @mousedown="moveStart(0)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip']" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
+					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[0], dotStyles]" @mousedown="moveStart(0)">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
 					</div>
-					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles[1], dotStyles]" @mousedown="moveStart(1)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip']" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
+					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[1], dotStyles]" @mousedown="moveStart(1)">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
 					</div>
 				</template>
 				<template v-else>
-					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot']" :style="[sliderStyles, dotStyles]" @mousedown="moveStart">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip']" :style="tooltipStyles">{{ formatter ? formatting(val) : val }}</span>
+					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles, dotStyles]" @mousedown="moveStart">
+						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyls">{{ formatter ? formatting(val) : val }}</span>
 					</div>
 				</template>
 			</template>
 			<template v-if="piecewise">
 				<ul class="vue-slider-piecewise">
 					<li v-for="(piecewiseObj, index) in piecewiseDotWrap" :style="[piecewiseDotStyle, piecewiseObj.style]">
-						<span class="vue-slider-piecewise-dot" :style="[piecewiseStyle, piecewiseObj.inRange ? piecewiseActiveStyle : null]"></span>
-						<span v-if="piecewiseLabel" class="vue-slider-piecewise-label" :style="[labelStyle, piecewiseObj.inRange ? labelActiveStyle : null]">{{ piecewiseObj.label }}</span>
+						<span class="vue-slider-piecewise-dot" :class="piecewiseActiveClass" :style="[piecewiseStyle, piecewiseObj.inRange ? piecewiseActiveStyle : null]"></span>
+						<span v-if="piecewiseLabel" class="vue-slider-piecewise-label" :class="labelActiveClass" :style="[labelStyle, piecewiseObj.inRange ? labelActiveStyle : null]">{{ piecewiseObj.label }}</span>
 					</li>
 				</ul>
 			</template>
-			<div ref="process" class="vue-slider-process" :style="processStyle"></div>
+			<div ref="process" class="vue-slider-process" :class="processClass" :style="processStyle"></div>
 		</div>
 	</div>
 </template>
@@ -143,7 +143,15 @@ export default {
 		bgStyle: Object,
 		tooltipStyle: [Array, Object],
 		labelStyle: Object,
-		labelActiveStyle: Object
+		labelActiveStyle: Object,
+    sliderClass: { type: [Array, String], default: null },
+    piecewiseClass: [Array, String],
+    piecewiseActiveClass: [Array, String],
+    processClass: [Array, String],
+    bgClass: [Array, String],
+    tooltipClass: [Array, String],
+    labelClass: [Array, String],
+    labelActiveClass: [Array, String],
 	},
 	computed: {
 		flowDirection() {
