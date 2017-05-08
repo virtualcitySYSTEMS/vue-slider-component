@@ -660,7 +660,7 @@ export default {
 	position: relative;
 	display: block;
 	border-radius: 15px;
-	background-color: #ccc;
+	/*background-color: #ccc;*/
 }
 .vue-slider-wrap .vue-slider::after {
 	content: '';
@@ -674,7 +674,7 @@ export default {
 .vue-slider-process {
 	position: absolute;
 	border-radius: 15px;
-	background-color: #3498db;
+	/*background-color: #3498db;*/
 	transition: all 0s;
 	z-index: 1;
 }
@@ -707,7 +707,7 @@ export default {
 .vue-slider-dot {
 	position: absolute;
 	border-radius: 50%;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	box-shadow: 0.5px 0.5px 2px 1px rgba(0, 0, 0, 0.32);
 	transition: all 0s;
 	will-change: transform;
@@ -734,10 +734,10 @@ export default {
 	padding: 2px 5px;
 	min-width: 20px;
 	text-align: center;
-	color: #fff;
+	/*color: #fff;*/
 	border-radius: 5px;
-	border: 1px solid #3498db;
-	background-color: #3498db;
+	/*border: 1px solid #3498db;*/
+	/*background-color: #3498db;*/
 	z-index: 9;
 }
 .vue-slider-tooltip.vue-slider-tooltip-top  {
@@ -767,9 +767,9 @@ export default {
 	left: 50%;
 	width: 0;
 	height: 0;
-	border: 5px solid transparent;
+	/*border: 5px solid transparent;
 	border: 6px solid transparent\0;
-	border-top-color: inherit;
+	border-top-color: inherit; */
 	transform: translate(-50%, 0);
 }
 .vue-slider-tooltip.vue-slider-tooltip-bottom::before {
@@ -779,9 +779,9 @@ export default {
 	left: 50%;
 	width: 0;
 	height: 0;
-	border: 5px solid transparent;
+	/*border: 5px solid transparent;
 	border: 6px solid transparent\0;
-	border-bottom-color: inherit;
+	border-bottom-color: inherit; */
 	transform: translate(-50%, 0);
 }
 .vue-slider-tooltip.vue-slider-tooltip-left::before  {
@@ -791,9 +791,9 @@ export default {
 	right: -10px;
 	width: 0;
 	height: 0;
-	border: 5px solid transparent;
+	/*border: 5px solid transparent;
 	border: 6px solid transparent\0;
-	border-left-color: inherit;
+	border-left-color: inherit; */
 	transform: translate(0, -50%);
 }
 .vue-slider-tooltip.vue-slider-tooltip-right::before  {
@@ -803,9 +803,9 @@ export default {
 	left: -10px;
 	width: 0;
 	height: 0;
-	border: 5px solid transparent;
+	/*border: 5px solid transparent;
 	border: 6px solid transparent\0;
-	border-right-color: inherit;
+	border-right-color: inherit; */
 	transform: translate(0, -50%);
 }
 .vue-slider-dot.vue-slider-hover:hover .vue-slider-tooltip {
@@ -836,7 +836,7 @@ export default {
 	width: 100%;
 	height: 100%;
 	display: inline-block;
-	background-color: rgba(0, 0, 0, 0.16);
+	/* background-color: rgba(0, 0, 0, 0.16); */
 	border-radius: 50%;
 	transform: translate(-50%, -50%);
     z-index: 2;
@@ -852,7 +852,7 @@ export default {
 	left: 50%;
 	white-space: nowrap;
 	font-size: 12px;
-	color: #333;
+	/*color: #333; */
 	transform: translateX(-50%);
 	visibility: visible;
 }
