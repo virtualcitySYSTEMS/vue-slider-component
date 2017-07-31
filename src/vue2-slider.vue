@@ -4,30 +4,30 @@
 			<template v-if="isMoblie">
 				<template v-if="isRange">
 					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[0], dotStyles]" @touchstart="moveStart(0)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
 					</div>
 					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[1], dotStyles]" @touchstart="moveStart(1)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
 					</div>
 				</template>
 				<template v-else>
 					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles, dotStyles]" @touchstart="moveStart">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles">{{ formatter ? formatting(val) : val}}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles">{{ formatter ? formatting(val) : val}}</span>
 					</div>
 				</template>
 			</template>
 			<template v-else>
 				<template v-if="isRange">
 					<div ref="dot0" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[0], dotStyles]" @mousedown="moveStart(0)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[0], 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles[0]">{{ formatter ? formatting(val[0]) : val[0] }}</span>
 					</div>
 					<div ref="dot1" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles[1], dotStyles]" @mousedown="moveStart(1)">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection[1], 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles[1]">{{ formatter ? formatting(val[1]) : val[1] }}</span>
 					</div>
 				</template>
 				<template v-else>
 					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles, dotStyles]" @mousedown="moveStart">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', tooltipClass]" :style="tooltipStyls">{{ formatter ? formatting(val) : val }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyls">{{ formatter ? formatting(val) : val }}</span>
 					</div>
 				</template>
 			</template>
@@ -169,8 +169,8 @@ export default {
 		tooltipStatus() {
 			return this.tooltip === 'hover' && this.flag ? 'vue-slider-always' : this.tooltip ? `vue-slider-${this.tooltip}` : ''
 		},
-		tooltipClass() {
-			return [`vue-slider-tooltip-${this.tooltipDirection}`, 'vue-slider-tooltip']
+		localTooltipClass() {
+			return this.tooltipClass || [`vue-slider-tooltip-${this.tooltipDirection}`, 'vue-slider-tooltip']
 		},
 		isMoblie() {
 			return this.eventType === 'touch' || this.eventType !== 'mouse' && /(iPhone|iPad|iPod|iOS|Android|SymbianOS|Windows Phone|Mobile)/i.test(navigator.userAgent)
