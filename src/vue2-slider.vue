@@ -457,10 +457,8 @@ export default {
 			let range = this.isRange ? this.limit[this.currentSlider] : this.limit
 			let valueRange = this.isRange ? this.valueLimit[this.currentSlider] : this.valueLimit
 			if (pos >= range[0] && pos <= range[1]) {
-			  console.log('sdsd', pos);
 				this.setTransform(pos)
 				let v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
-        console.log(v);
 				this.setCurrentValue(v, isDrag)
 			}
 			else if (pos < range[0]) {
