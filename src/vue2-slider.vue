@@ -27,7 +27,7 @@
 				</template>
 				<template v-else>
 					<div ref="dot" :class="[tooltipStatus, 'vue-slider-dot', sliderClass]" :style="[sliderStyles, dotStyles]" @mousedown="moveStart">
-						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyls">{{ formatter ? formatting(val) : val }}</span>
+						<span :class="['vue-slider-tooltip-' + tooltipDirection, 'vue-slider-tooltip', localTooltipClass]" :style="tooltipStyles">{{ formatter ? formatting(val) : val }}</span>
 					</div>
 				</template>
 			</template>
@@ -235,7 +235,7 @@ export default {
 			return this.data ? (this.data.length - 1) : this.max
 		},
 		multiple() {
-			let decimals = `${this.interval}`.split('.')[1]
+			let decimals = this.numberToString(this.interval).split('.')[1];
 			return decimals ? Math.pow(10, decimals.length) : 1
 		},
 		spacing() {
@@ -245,9 +245,10 @@ export default {
 			if (this.data) {
 				return this.data.length - 1
 			}
+			/*   Check is not usefull for our case, does not work correctly with really small intervall values;
 			else if (~~((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
 				console.error('[Vue-slider warn]: Prop[interval] is illegal, Please make sure that the interval can be divisible')
-			}
+			} */
 			return (this.maximum - this.minimum) / this.interval
 		},
 		gap() {
@@ -364,6 +365,27 @@ export default {
 		}
 	},
 	methods: {
+    numberToString(num) {
+      if(/\d+\.?\d*e[\+\-]*\d+/i.test(num)) {
+        var zero = '0',
+          parts = String(num).toLowerCase().split('e'),
+          e = parts.pop(),
+          l = Math.abs(e),
+          sign = e/l,
+          coeff_array = parts[0].split('.');
+        if(sign === -1) {
+          num = zero + '.' + new Array(l).join(zero) + coeff_array.join('');
+        }
+        else {
+          var dec = coeff_array[1];
+          if(dec) l = l - dec.length;
+          num = coeff_array.join('') + new Array(l+1).join(zero);
+        }
+      } else {
+        num = `${num}`;
+      }
+      return num;
+    },
 		bindEvents() {
 			if (this.isMoblie) {
 				this.$refs.wrap.addEventListener('touchmove', this.moving)
@@ -435,8 +457,10 @@ export default {
 			let range = this.isRange ? this.limit[this.currentSlider] : this.limit
 			let valueRange = this.isRange ? this.valueLimit[this.currentSlider] : this.valueLimit
 			if (pos >= range[0] && pos <= range[1]) {
+			  console.log('sdsd', pos);
 				this.setTransform(pos)
 				let v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
+        console.log(v);
 				this.setCurrentValue(v, isDrag)
 			}
 			else if (pos < range[0]) {
